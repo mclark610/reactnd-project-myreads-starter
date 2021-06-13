@@ -3,30 +3,56 @@ import {getAll,search} from '../BooksAPI';
 import BookCase from './bookcase';
 import {Link} from 'react-router-dom';
 import Book from './book';
+import {update} from '../BooksAPI';
 
 class SearchBookstore extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             books: [],
-            searchValue: "",
         }
+    }
+
+    handleBookChange = (book,newLocation) => {
+        let idx = this.state.books.findIndex(b => b.id === book.id);
+        console.log("handleBookChange idx is " + idx);
+        console.log("handleBookChange newLocation is : " +newLocation);
+
+        let books = [...this.state.books];
+        books[idx].shelf=newLocation;
+        this.setState({books});
+        console.log("book is now " + JSON.stringify(books[idx]));
+
+        try {
+            update(book,newLocation).then( res => {
+                console.log("moveBook res: " + JSON.stringify(res));
+            });
+
+            this.state.books.filter((b) => b.id !== book.id);
+        }
+        catch(err) {
+            console.log("could not update " + book.title + " because of err: " + err.message);
+        }
+
+        this.props.moveBook(book,newLocation);
     }
 
     handleOnClick = (e) => {
     }
 
-    handleOnChange = (e) => {
+     handleOnChange = (e) => {
         console.log("e value: " + e.target.value);
         this.setState({searchValue: e.target.value});
         try {
             if (e.target.value) {
-                search(e.target.value).then((books) => {
+                console.log("search for book value: " + e.target.value);
+//                search(e.target.value).then((books) => {
+                  search(e.target.value).then((books) => {
+
+                    console.log('numbooks before setstate found: ' + books.length);
                     this.setState({books});
-                    console.log('numbooks found: ' + (books? books.length:0));
                 })
             }
-
         }
         catch(err) {
             console.log("oops! error handling search data: " + err.message);
@@ -60,10 +86,18 @@ class SearchBookstore extends React.Component {
               </div>
               <div className="search-books-results">
                 <ol className="books-grid">
-                    { this.state.books.map((book,idx) => {
+                    {  this.state.books && this.state.books.length && this.state.books.map((book,idx) => {
                         return(
+
                             <li key={idx}>
-                                <Book book={book} bookId={book.id} bookAuthors={book.authors} bookTitle={book.title} bookCoverURL={book.imageLinks.thumbnail} bookshelfValue={this.props.bookshelfValue} moveBook={this.props.moveBook}/>
+                                {console.log("numbooks: " + this.state.books.length)}
+                                <Book book={book}
+                                      bookId={book.id}
+                                      bookAuthors={book.authors}
+                                      bookTitle={book.title}
+                                      bookCoverURL={(book.hasOwnProperty('imageLinks.thumbnail')?book.imageLinks.thumbnail:'')}
+                                      bookshelfValue={(book.hasOwnProperty('shelf')? book.shelf:'none')}
+                                      moveBook={this.props.moveBook}/>
                             </li>
                         );
                     })}

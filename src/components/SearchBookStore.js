@@ -4,14 +4,15 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import {search,update} from '../BooksAPI';
 
-import BookCase from './bookcase';
-import Book from './book';
+import BookCase from './BookCase';
+import Book from './Book';
 
  /**
  * @description Busy component that handles data in the book store (search)
  * It also marks and updates the location of the book search books.
  * @constructor initializes search book array
  * @param {function} moveBook - uses the movebook function
+ * @param {function} bookCaseBooks - books currently on bookshelf
  */
 
 class SearchBookstore extends React.Component {
@@ -20,6 +21,21 @@ class SearchBookstore extends React.Component {
         this.state = {
             books: [],
         }
+    }
+
+    // set book locations to none
+    // initialize book locations
+    initBookLocations = (books) => {
+        Array.isArray(books) && books.map( (book) => {
+            book.shelf="none";
+            const matchingBookArray = this.props.bookCaseBooks.filter( (mb) => {
+                return(book.id === mb.id);
+            });
+            book.shelf=matchingBookArray[0]?matchingBookArray[0].shelf:'none';
+
+        })
+
+        this.setState({books});
     }
 
     handleBookChange = (book,newLocation) => {
@@ -43,11 +59,9 @@ class SearchBookstore extends React.Component {
 
      handleOnChange = (e) => {
         try {
-            if (e.target.value) {
-                  search(e.target.value).then((books) => {
-                    this.setState({books});
-                })
-            }
+            search(e.target.value).then((books) => {
+                this.initBookLocations(books);
+            });
         }
         catch(err) {
             console.log("handleOnChange::oops! error handling search data: " + err.message);
@@ -98,6 +112,7 @@ class SearchBookstore extends React.Component {
 
 SearchBookstore.propTypes = {
     moveBook: PropTypes.func.isRequired,
+    bookCaseBooks: PropTypes.array.isRequired,
 }
 
 export default SearchBookstore;

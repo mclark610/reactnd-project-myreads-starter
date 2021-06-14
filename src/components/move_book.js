@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/*MoveBook
+ * select to pass back the new location of the book
+ * it is called from
+ */
+
 class MoveBook extends React.Component {
     constructor(props) {
         super(props);
@@ -33,7 +38,7 @@ class MoveBook extends React.Component {
 
 MoveBook.propTypes = {
     currentLocation: PropTypes.string.isRequired,
-    changeLocation: PropTypes.func,
+    changeLocation: PropTypes.func.isRequired,
 }
 
 export default MoveBook;

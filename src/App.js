@@ -1,11 +1,14 @@
 import React from 'react'
-import * as BooksAPI from './BooksAPI'
+
 import './App.css'
 import BookCase from './components/bookcase';
 import SearchBookstore from './components/search_bookstore';
 import {Route} from 'react-router-dom';
-import {getAll,get,update} from './BooksAPI';
+import {getAll,update} from './BooksAPI';
 
+/* BooksApp
+ * Handling the data for the bookcase.
+ */
 class BooksApp extends React.Component {
   constructor() {
       super();
@@ -20,7 +23,7 @@ class BooksApp extends React.Component {
           })
       }
       catch(err) {
-          console.log("oops! error handling search data: " + err.message);
+          console.log("BookApp::componentDidMount error handling search data: " + err.message);
       }
   }
 
@@ -28,8 +31,6 @@ class BooksApp extends React.Component {
       let idx = this.state.books.findIndex(b => b.id === book.id);
       // coming from SearchBookstore
       // new book.
-      console.log("movebooks idx is " + idx);
-      console.log("movebooks newLocation is : " +newLocation);
       if (idx === -1) {
           book.shelf = newLocation;
           this.setState({
@@ -41,12 +42,11 @@ class BooksApp extends React.Component {
           let books = [...this.state.books];
           books[idx].shelf=newLocation;
           this.setState({books});
-          console.log("book is now " + JSON.stringify(books[idx]));
       }
 
       try {
+          book.shelf=newLocation;
           update(book,newLocation).then( res => {
-              console.log("moveBook res: " + JSON.stringify(res));
           });
       }
       catch(err) {

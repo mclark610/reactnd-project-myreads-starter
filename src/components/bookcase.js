@@ -1,8 +1,12 @@
 import React from 'react';
 import BookShelf from './bookshelf';
 import Search from './book_search';
-import {getAll,get,update} from '../BooksAPI';
+
 import PropTypes from 'prop-types';
+
+/* Bookcase is the wrapper for the bookshelves currently used.
+ * it breaks down the books array into the three different shelves.
+ */
 
 class BookCase extends React.Component {
     render() {

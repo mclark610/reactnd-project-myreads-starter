@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MoveBook from './move_book';
-/*
- * Book:
- *   Main goal is to display individual books.
- *   Error handling: url may be missing.  can move this back?
+
+/**
+* @description Main goal is to display individual books.
+* @constructor requires url - error handling state required for now
+* @param {object} book - The book object
+* @param {string} bookshelfValue - the bookshelf where the book resides
+* @param {func} moveBook - if the book moves, this function does that.
 */
+
 class Book extends React.Component {
     constructor(props) {
         super(props);

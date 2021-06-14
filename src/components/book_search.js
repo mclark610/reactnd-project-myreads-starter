@@ -1,10 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-/* Search
- * Routes to the Search book page from the bookapp
- */
- 
+/**
+* @description Routes to the Search book page from the bookapp
+* @constructor none
+* @param none
+*/
 const Search = () => {
     return(
         <div className="open-search">

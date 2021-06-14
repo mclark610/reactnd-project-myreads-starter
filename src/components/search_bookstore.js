@@ -2,14 +2,16 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import {getAll,search,update} from '../BooksAPI';
+import {search,update} from '../BooksAPI';
 
 import BookCase from './bookcase';
 import Book from './book';
 
-/* SearchBookstore
- * Busy component that handles data in the book store (search)
+ /**
+ * @description Busy component that handles data in the book store (search)
  * It also marks and updates the location of the book search books.
+ * @constructor initializes search book array
+ * @param {function} moveBook - uses the movebook function
  */
 
 class SearchBookstore extends React.Component {
@@ -58,7 +60,7 @@ class SearchBookstore extends React.Component {
               <div className="search-books-bar">
                 <Link
                   to='/'
-                  className='BookCase'>
+                  className={'BookCase'}>
                   <button className="close-search" onClick={this.handleOnClick}>Close</button>
                 </Link>
 

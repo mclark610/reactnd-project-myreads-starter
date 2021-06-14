@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 import Book from './book';
 import { v4 as uuidv4 } from 'uuid';
 
-/* BookShelf
- * Displays books on this shelf.
+/**
+* @description Displays books on this shelf.
+* @constructor none
+* @param {string} bookshelfTitle - The title of the bookshelf
+* @param {string} bookshelfValue - bookshelf code that can be found in option
+* @param {array}  bookshelfBooks - array of books on this shelf.
+* @param {function} moveBook     - movebook function used in book
 */
 const BookShelf = (props) => {
     return(

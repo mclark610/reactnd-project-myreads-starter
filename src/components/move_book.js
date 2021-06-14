@@ -1,18 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-/*MoveBook
- * select to pass back the new location of the book
- * it is called from
+ /**
+ * @description  select to pass back the new location of the book
+  * it is called from.
+ * @constructor
+ * @param {string} currentLocation -current location of book
+ * @param {string} changeLocation - move book to changeLocation
  */
-
+ 
 class MoveBook extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            shelf: this.props.currentLocation,
-        }
-    }
 
     handleOnChange = (e) => {
         if ((this.props.currentLocation !== e.target.value) &&

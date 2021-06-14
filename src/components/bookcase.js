@@ -7,11 +7,19 @@ import PropTypes from 'prop-types';
 /* Bookcase is the wrapper for the bookshelves currently used.
  * it breaks down the books array into the three different shelves.
  */
+ /**
+ * @description Bookcase is the wrapper for the bookshelves currently used.
+ * it breaks down the books array into the three different shelves
+ * @constructor none
+ * @param {array} books - books array all books on bookshelf
+ * @param {func} moveBook - function that moves books when required by book
+ */
 
-class BookCase extends React.Component {
-    render() {
-        let books = this.props.books;
-        let moveBook = this.props.moveBook;
+//class BookCase extends React.Component {
+  const BookCase = (props) => {
+        let books = props.books;
+        let moveBook = props.moveBook;
+
         const currentlyReading = books.filter( (book) =>  book.shelf === "currentlyReading" );
         const wantToRead = books.filter( (book) =>  book.shelf === "wantToRead" );
         const read = books.filter( (book) =>  book.shelf === "read" );
@@ -31,7 +39,6 @@ class BookCase extends React.Component {
               <Search />
             </div>
         );
-    }
 }
 
 BookCase.propTypes = {

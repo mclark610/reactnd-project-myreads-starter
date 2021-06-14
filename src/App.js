@@ -6,9 +6,17 @@ import SearchBookstore from './components/search_bookstore';
 import {Route} from 'react-router-dom';
 import {getAll,update} from './BooksAPI';
 
-/* BooksApp
- * Handling the data for the bookcase.
- */
+// Future release
+// TODO: place Search array in BooksApp
+// TODO: Fix Link to search bookstore so will use history backpage
+//     : This will get rid of browser warning
+
+/**
+* @description BooksApp
+* @constructor books array for use with bookcase
+* @param {string} none
+*/
+
 class BooksApp extends React.Component {
   constructor() {
       super();
